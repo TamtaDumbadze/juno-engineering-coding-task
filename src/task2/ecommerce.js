@@ -2,17 +2,16 @@
 import { allIds, fetchOrderById } from "../api";
 
 ////////////////////////////////// Your code tasks is below //////////////////////////////////////////////////////
+const twoWeeksInMilliseconds = 14 * 24 * 3600 * 1000
 
 const fetchAllOrders = async () => {
-    const ids = allIds;
+    const ids = allIds
     // .....
     //   1. TODO: fetch all ids using the "fetchOrderById" and the given ids, make it work as efficient and clean as possible.
 
     const orderList = await Promise.all(
         ids.map(async (id) => fetchOrderById(id))
     )
-
-    console.log(orderList)
 
     return orderList
 }
@@ -24,18 +23,17 @@ const bucketOrdersByUsers = async () => {
     const allOrders = await fetchAllOrders()
 
     allOrders.forEach((order) => {
-        ordersByUsers = {
-            ...ordersByUsers, [order.userId]: ordersByUsers[order.userId] ? [...ordersByUsers[order.userId], order] : [order]
-        }
-    })
+        const id = order.userId
+        ordersByUsers[id] ? ordersByUsers[id].push(order) : ordersByUsers[id] = [order]
+    });
 
     return ordersByUsers
-}
+  }
 
 const getLast2WeeksOrders = async () => {
     //   3. TODO: fetch all Ids and return array with only the last 2 weeks orders. make it work as efficient and clean as possible.
     const orders = await fetchAllOrders()
-    const lastTwoWeeks = new Date(Date.now() - 12096e5)
+    const lastTwoWeeks = new Date(Date.now() - twoWeeksInMilliseconds)
 
     const lastOrders = orders.filter(order => {
         if (order.timestamp >= lastTwoWeeks) return order
