@@ -5,7 +5,7 @@ import { allIds, fetchOrderById } from "../api";
 const twoWeeksInMilliseconds = 14 * 24 * 3600 * 1000
 
 const fetchAllOrders = async () => {
-    const ids = allIds;
+    const ids = allIds
     // .....
     //   1. TODO: fetch all ids using the "fetchOrderById" and the given ids, make it work as efficient and clean as possible.
 
